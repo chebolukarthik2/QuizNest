@@ -13,7 +13,7 @@
 
 <br/>
 
-[✨ Live Demo](#) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#️-architecture) · [📸 Screenshots](#-screenshots)
+[✨ Live Demo](https://quiz-nest-umber.vercel.app/) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#️-architecture) · [📸 Screenshots](#-screenshots)
 
 </div>
 
@@ -147,7 +147,27 @@ That's it — every push to `main` redeploys both your frontend *and* your Conve
 
 ## 📸 Screenshots
 
-> _Add your own screenshots here — Student Dashboard, Quiz Attempt screen, Admin Results view, etc._
+> 👉 Want to see it in action? **[Try the live demo](https://quiz-nest-umber.vercel.app/)**
+
+### 🧑‍🎓 Student Dashboard
+Quizzes available, quizzes attempted, average score, and recent results — all in one glance.
+
+<img src="docs/screenshots/student-dashboard.png" alt="QuizNest Student Dashboard (dark mode)" width="100%" />
+
+### ⏱️ Quiz Attempt
+A clean, distraction-free interface with a live countdown timer and progress counter.
+
+<img src="docs/screenshots/quiz-attempt.png" alt="QuizNest quiz attempt screen (light mode)" width="100%" />
+
+### 🧑‍💼 Admin Dashboard
+Manage every quiz, its questions, and its published status from one place.
+
+<img src="docs/screenshots/admin-dashboard.png" alt="QuizNest Admin Dashboard (light mode)" width="100%" />
+
+### 📊 Results Ledger
+Every student's score, grade, and status — searchable and filterable by subject.
+
+<img src="docs/screenshots/admin-results.png" alt="QuizNest admin results ledger (dark mode)" width="100%" />
 
 ---
 
