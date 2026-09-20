@@ -1,116 +1,170 @@
-# QuizNest
+<div align="center">
 
-**QuizNest** is an Online Quiz Management System (OQMS) that lets administrators create quizzes and manage questions, while students attempt quizzes and instantly view their results. Built as a full-stack academic mini-project, modeled end-to-end with UML (Class, Use Case, Activity, Sequence, Collaboration, State Chart, Component, Package, and Deployment diagrams) before implementation.
+# 🧠 QuizNest
 
-## Tech Stack
+### The quiz platform that grades itself so you don't have to.
 
-- **Frontend:** React 19 + TypeScript + Vite + Tailwind CSS + shadcn/ui
-- **Backend:** Convex (serverless functions + real-time database)
-- **Auth:** Convex Auth (email/password)
-- **Hosting:** Vercel (frontend) + Convex Cloud (backend)
+**Create quizzes. Publish instantly. Watch results roll in — automatically graded, zero manual effort.**
 
-## Actors & Core Features
+[![Made with React](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
+[![Powered by Convex](https://img.shields.io/badge/Backend-Convex-EE342F?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PC9zdmc+&logoColor=white)](https://convex.dev)
+[![Deployed on Vercel](https://img.shields.io/badge/Hosted_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-100%25-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
-**Student:** Register, Login, View Available Quizzes, Attempt Quiz, Submit Quiz, View Result, Logout
+<br/>
 
-**Admin:** Login, Create Quiz, Edit Questions (add/update/delete), Publish Quiz, View Student Results, Logout
+[✨ Live Demo](#) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#️-architecture) · [📸 Screenshots](#-screenshots)
 
-## Data Model (matches the Class Diagram)
+</div>
 
-| Entity | Key Fields |
+---
+
+## 🎯 What is QuizNest?
+
+QuizNest is a full-stack **Online Quiz Management System** built for two kinds of people: the ones who *make* the quiz, and the ones who *take* it.
+
+- 🧑‍🎓 **Students** register, browse live quizzes, attempt them, and get results the instant they hit submit.
+- 🧑‍💼 **Admins** spin up a quiz, build out the question bank, publish it, and watch scores populate a live results dashboard.
+
+No spreadsheets. No manual grading. No "I'll email you the results next week."
+
+---
+
+## ⚡ Features
+
+| | |
 |---|---|
-| User | userId, name, email, password, role |
-| Student | studentId, course, semester |
-| Admin | adminId, department |
-| Quiz | quizId, title, totalMarks, duration, status |
-| Question | questionId, questionText, optionA–D, correctAnswer |
-| Result | resultId, score, grade, status |
+| 🔐 **Secure Auth** | Email + password authentication, powered by Convex Auth with proper JWT signing |
+| 📝 **Quiz Builder** | Create quizzes with custom titles, total marks, and duration limits |
+| ❓ **Question Bank** | Add, edit, or delete multiple-choice questions on the fly |
+| 🚦 **Publish Control** | Quizzes stay hidden until an admin explicitly publishes them |
+| ⏱️ **Live Attempts** | Students attempt quizzes in a clean, distraction-free interface |
+| ⚡ **Instant Grading** | Scores, grades, and status are calculated the second a quiz is submitted |
+| 📊 **Results Dashboard** | Admins get a real-time view of every student's performance |
+| 🌗 **Dark Mode** | Because obviously |
 
-**Quiz status lifecycle** (matches the State Chart Diagram): `Created → Published → InProgress → Completed → Evaluated`
+---
 
-## Project Structure
+## 🛠️ Tech Stack
 
+<div align="center">
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | React 19 · TypeScript · Vite · Tailwind CSS · shadcn/ui |
+| **Backend** | Convex (serverless functions + real-time database) |
+| **Auth** | Convex Auth (email/password, JWT-based sessions) |
+| **Hosting** | Vercel (frontend) + Convex Cloud (backend) |
+
+</div>
+
+---
+
+## 🏗️ Architecture
+
+QuizNest's frontend and backend deploy independently but stay wired together through one environment variable:
+
+```text
+   QuizNest Frontend
+          │
+          ▼
+        Vercel  ──────────────  CONVEX_DEPLOY_KEY
+          │
+          ▼
+   Convex Production
+          │
+          ├── Functions   ✅
+          ├── Schema      ✅
+          ├── Data        ✅
+          ├── JWT signing keys ✅
+          └── Live auth endpoints ✅
 ```
-src/
-├── pages/            # Presentation layer (Student & Admin screens)
-│   ├── student/       # View Quizzes, Attempt Quiz, Result
-│   └── admin/          # Create Quiz, Manage Questions, Publish, Results
-├── convex/            # Business logic + data layer (serverless functions)
-│   ├── schema.ts        # Database schema (Class Diagram → tables)
-│   ├── quizzes.ts        # Quiz Component
-│   ├── questions.ts     # Question Component
-│   ├── results.ts        # Result Component
-│   ├── users.ts           # User / Student / Admin Component
-│   └── auth.ts            # Login Component
-├── components/        # Shared UI components
-└── hooks/              # Auth & utility hooks
-```
 
-## Local Development
+Every screen, form, and API call traces back to a full UML model designed before a single line of code was written:
 
-### 1. Install dependencies
+- **Class Diagram** → the database schema (`User`, `Student`, `Admin`, `Quiz`, `Question`, `Result`)
+- **State Chart** → a quiz's lifecycle (`Created → Published → InProgress → Completed → Evaluated`)
+- **Use Case Diagram** → every page and route in the app
+- **Component Diagram** → the `src/convex/*.ts` file split
+- **Package Diagram** → the `pages/` vs `convex/` separation
+
+---
+
+## 🚀 Quick Start
+
 ```bash
+# 1. Clone it
+git clone https://github.com/<your-username>/QuizNest.git
+cd QuizNest
+
+# 2. Install dependencies
 npm install
-```
 
-### 2. Set up Convex
-```bash
+# 3. Spin up Convex (creates your dev deployment + generates types)
 npx convex dev
-```
-This logs you into Convex, creates a dev deployment, generates `src/convex/_generated/` (required for the app to type-check and run), and writes `VITE_CONVEX_URL` into `.env.local` automatically.
 
-### 3. Run the app
-```bash
+# 4. Run the app
 npm run dev
 ```
-Visit `http://localhost:5173`.
 
-## Deploying to Vercel
+Open **http://localhost:5173** and you're in. 🎉
 
-QuizNest's frontend deploys to **Vercel**; its backend (database + serverless functions) deploys to **Convex Cloud**. This repo's `vercel.json` is already configured to do both in one build step.
+---
 
-### Step 1 — Push this repo to GitHub
+## ☁️ Deploying Your Own
+
+QuizNest ships ready to deploy: **Vercel** for the frontend, **Convex Cloud** for the backend.
+
+### 1️⃣ Push to GitHub
 ```bash
-git init
-git add .
-git commit -m "Initial commit: QuizNest"
-git branch -M main
-git remote add origin <your-github-repo-url>
+git init && git add . && git commit -m "Initial commit: QuizNest"
+git branch -M main && git remote add origin <your-repo-url>
 git push -u origin main
 ```
 
-### Step 2 — Get a Convex deploy key
-1. Go to [dashboard.convex.dev](https://dashboard.convex.dev) and open (or create) your project.
-2. Go to **Settings → Deploy Keys** and generate a **Production** deploy key.
-3. Copy it — you'll paste it into Vercel next.
+### 2️⃣ Set up Convex Production Auth
+Convex Auth needs its own signing keys on your **production** deployment (separate from anything you set in Vercel):
 
-### Step 3 — Import the project into Vercel
-1. Go to [vercel.com/new](https://vercel.com/new) and import this GitHub repo.
-2. Vercel will auto-detect the settings from `vercel.json` (build command: `npx convex codegen && npx convex deploy --cmd 'npm run build'`, output directory: `dist`).
-3. Under **Environment Variables**, add:
-   | Name | Value |
+```bash
+npx convex login
+npx @convex-dev/auth   # auto-generates & sets JWT_PRIVATE_KEY + JWKS + SITE_URL
+```
+
+### 3️⃣ Import into Vercel
+1. [vercel.com/new](https://vercel.com/new) → import your repo
+2. Vercel reads `vercel.json` automatically — no manual build config needed
+3. Add **one** environment variable:
+
+   | Key | Value |
    |---|---|
-   | `CONVEX_DEPLOY_KEY` | the production deploy key from Step 2 |
-4. Click **Deploy**.
+   | `CONVEX_DEPLOY_KEY` | Production deploy key from [dashboard.convex.dev](https://dashboard.convex.dev) → Settings → Deploy Keys |
 
-During the build: `npx convex codegen` generates the typed `_generated/` client first (Convex's documented `deploy --cmd` order runs the build *before* codegen, which breaks TypeScript imports — running codegen explicitly beforehand avoids that). Then `npx convex deploy --cmd 'npm run build'` pushes your functions/schema to production, injects `VITE_CONVEX_URL` for the build subprocess, and runs `npm run build` — all in one step.
+4. Hit **Deploy** 🚀
 
-### Step 4 — Done
-Vercel gives you a live URL (e.g. `quiznest.vercel.app`). Open it, register a student account, and (for an admin account) use the `createAdminProfile` bootstrap flow described in `src/convex/users.ts`.
+That's it — every push to `main` redeploys both your frontend *and* your Convex backend together.
 
-## Environment Variables Reference
+---
 
-| Variable | Where | Purpose |
-|---|---|---|
-| `CONVEX_DEPLOY_KEY` | Vercel project settings | Lets `convex deploy` push functions/schema during the Vercel build |
-| `VITE_CONVEX_URL` | Auto-generated | Points the frontend at your Convex deployment (set automatically by `convex dev`/`convex deploy`) |
+## 📸 Screenshots
 
-Never commit `.env.local` or any file containing real deploy keys — both are already git-ignored.
+> _Add your own screenshots here — Student Dashboard, Quiz Attempt screen, Admin Results view, etc._
 
-## UML Coverage
+---
 
-This implementation was built directly from a full UML model (Class, Use Case + descriptions, Activity with swimlanes/fork-join, Sequence, Collaboration, State Chart, Component, Package, and Deployment diagrams). Route structure mirrors the Use Case diagram; the `quizzes.status` field mirrors the State Chart; the `src/convex/*.ts` file split mirrors the Component diagram; the `pages/` vs `convex/` split mirrors the Package diagram (Presentation vs Business Logic vs Data).
+## 🔒 Security Notes
 
-## License
+- Deploy keys are scoped to `deployment:deploy` only — least privilege, no admin/data access
+- JWT signing keys live exclusively in Convex's environment, never in source control
+- `.env.local` and `.env.keys` are git-ignored by default
 
-Academic project — free to use and modify for learning purposes.
+---
+
+## 📄 License
+
+Free to use, fork, and build on. Academic project turned real product — do something cool with it.
+
+<div align="center">
+
+**Built with 🧠 for people who'd rather build quizzes than grade them by hand.**
+
+</div>
