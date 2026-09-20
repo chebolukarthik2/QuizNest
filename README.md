@@ -86,14 +86,14 @@ git push -u origin main
 
 ### Step 3 — Import the project into Vercel
 1. Go to [vercel.com/new](https://vercel.com/new) and import this GitHub repo.
-2. Vercel will auto-detect the settings from `vercel.json` (build command: `npx convex deploy --cmd 'npm run build'`, output directory: `dist`).
+2. Vercel will auto-detect the settings from `vercel.json` (build command: `npx convex codegen && npx convex deploy --cmd 'npm run build'`, output directory: `dist`).
 3. Under **Environment Variables**, add:
    | Name | Value |
    |---|---|
    | `CONVEX_DEPLOY_KEY` | the production deploy key from Step 2 |
 4. Click **Deploy**.
 
-During the build, `npx convex deploy` pushes your Convex functions/schema to production, generates the typed `_generated` client, injects `VITE_CONVEX_URL` automatically, and then runs `npm run build` for the Vite frontend — all in one step.
+During the build: `npx convex codegen` generates the typed `_generated/` client first (Convex's documented `deploy --cmd` order runs the build *before* codegen, which breaks TypeScript imports — running codegen explicitly beforehand avoids that). Then `npx convex deploy --cmd 'npm run build'` pushes your functions/schema to production, injects `VITE_CONVEX_URL` for the build subprocess, and runs `npm run build` — all in one step.
 
 ### Step 4 — Done
 Vercel gives you a live URL (e.g. `quiznest.vercel.app`). Open it, register a student account, and (for an admin account) use the `createAdminProfile` bootstrap flow described in `src/convex/users.ts`.
